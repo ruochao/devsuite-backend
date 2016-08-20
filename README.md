@@ -10,9 +10,16 @@ A simple development suite for backend solution.
 * portal - A web app to host UI part.
 * distribution - To assemble project files and outputs.
 
-## Used Components
+## Key Components/Libraries
+* Java 1.8
 * Spring 4.3.0
-* Jersey 2.2
+* Spring MVC 4.3.0
+* Spring Security 4.1.2
+* Jersey 2.2 (JAX-RS)
+
+## Key Notes
+* A web app hosted at port 8080, provides restful web service support (JAX-RS). A token (JWT) based mechanism added to support stateless authentication and authorization.
+* A web app hosted at port 8090, provides web page application based on MVC structure.
 
 ## License
 
