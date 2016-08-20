@@ -21,6 +21,24 @@ A simple development suite for backend solution.
 * A web app hosted at port 8080, provides restful web service support (JAX-RS). A token (JWT) based mechanism added to support stateless authentication and authorization.
 * A web app hosted at port 8090, provides web page application based on MVC structure.
 
+## How to Use
+* Compile the whole project first
+```shell
+ mvn clean install
+```
+* Run service
+```shell
+ cd service
+ mvn jetty:run
+```
+* Run portal
+```shell
+ cd portal
+ mvn jetty:run
+```
+* Access service sample page `http://localhost:8080/service`
+* Access portal page `http://localhost:8090/portal`
+
 ## License
 
 Released under version 2.0 of the Apache License.
