@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:aop="http://www.springframework.org/schema/aop" xmlns:security="http://www.springframework.org/schema/security"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+        http://www.springframework.org/schema/security
+        http://www.springframework.org/schema/security/spring-security.xsd">
+
+  <context:property-placeholder location="classpath:config.properties" />
+
+  <security:http create-session="stateless" pattern="/api/secured/**" use-expressions="true"
+    entry-point-ref="tokenEntryPoint">
+    <security:custom-filter position="BASIC_AUTH_FILTER" ref="jwtSecurityFilter" />
+  </security:http>
+
+  <security:authentication-manager />
+
+  <bean id="tokenEntryPoint" class="com.mocircle.devsuite.backend.core.security.TokenAuthenticationEnterPoint">
+  </bean>
+
+  <bean id="jwtSecurityFilter" class="org.pac4j.springframework.security.web.SecurityFilter">
+    <property name="clients" value="headerClient" />
+    <property name="config" ref="config" />
+  </bean>
+
+  <bean id="clients" class="org.pac4j.core.client.Clients">
+    <property name="clients">
+      <ref bean="headerClient" />
+    </property>
+  </bean>
+
+  <bean id="headerClient" class="org.pac4j.http.client.direct.HeaderClient">
+    <constructor-arg name="headerName" value="X-Auth-Token" />
+    <constructor-arg name="tokenAuthenticator">
+      <bean class="org.pac4j.jwt.credentials.authenticator.JwtAuthenticator">
+        <constructor-arg name="encryptionSecret" value="${jwt.secret}" />
+        <constructor-arg name="signingSecret" value="${jwt.secret}" />
+      </bean>
+    </constructor-arg>
+  </bean>
+
+  <bean id="config" class="org.pac4j.core.config.Config">
+    <property name="clients" ref="clients" />
+  </bean>
+
+</beans>

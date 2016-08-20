@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Portal</title>
+<script src='http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.4.min.js'
+	type='text/javascript'></script>
+</head>
+<body>
+	<h1>Portal</h1>
+	<p>
+		<button onclick="clearToken()">Clear Token</button>
+	</p>
+	<p>
+		<button onclick="getNormalMsg()">Get Normal Message</button>
+	</p>
+	<p>
+		<button onclick="getSecuredMsg()">Get Secured Message</button>
+	</p>
+	<p>
+		This is the result from server: <span id="result-span"></span>
+	</p>
+
+	<script type="text/javascript">
+		function getMsg(url) {
+			$.ajax({
+				url : url,
+				type : "GET",
+				beforeSend : function(xhr) {
+					var token = localStorage.getItem("token");
+					if (token) {
+						xhr.setRequestHeader('X-Auth-Token', token);
+					}
+				},
+				success : function(data) {
+					$("#result-span").text(JSON.stringify(data));
+				},
+				error : function(xhr, status, error) {
+					if (xhr.status == 401) {
+						handle401();
+					}
+				}
+			});
+		}
+
+		function clearToken() {
+			localStorage.removeItem("token");
+		}
+
+		function getNormalMsg() {
+			var url = "/service/api/hello";
+			getMsg(url);
+		}
+
+		function getSecuredMsg() {
+			var url = "/service/api/secured/hello";
+			getMsg(url);
+		}
+
+		function handle401() {
+			window.open("login.html", "_blank");
+		}
+	</script>
+</body>
+</html>

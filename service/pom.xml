@@ -208,13 +208,11 @@
     </profile>
     <profile>
       <id>dev</id>
-      <properties>
-      </properties>
+      <properties></properties>
     </profile>
     <profile>
       <id>production</id>
-      <properties>
-      </properties>
+      <properties></properties>
     </profile>
   </profiles>
 </project>

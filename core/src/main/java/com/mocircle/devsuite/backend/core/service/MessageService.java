@@ -6,4 +6,6 @@ public interface MessageService {
 
     Message getMessage();
     
+    Message getSecuredMessage(String userName);
+    
 }

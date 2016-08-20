@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+<script src='http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.4.min.js'
+	type='text/javascript'></script>
+</head>
+<body>
+	<p>
+		<input id="username-input" type="text" value="user1" />
+	</p>
+	<p>
+		<input id="password-input" type="password" value="password" />
+	</p>
+	<p>
+		<button onclick="login()">Login</button>
+	</p>
+
+	<script type="text/javascript">
+		function login() {
+			var u = $("#username-input").val();
+			var p = $("#password-input").val();
+
+			var url = "/service/api/login";
+			var data = {
+				userName : u,
+				password : p
+			}
+			$.post(url, data, function(data) {
+				alert("Token: " + data);
+				localStorage.setItem('token', data);
+			});
+		}
+	</script>
+</body>
+</html>
