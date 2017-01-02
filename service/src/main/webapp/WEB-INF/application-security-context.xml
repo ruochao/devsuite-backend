@@ -38,8 +38,8 @@
     <constructor-arg name="headerName" value="X-Auth-Token" />
     <constructor-arg name="tokenAuthenticator">
       <bean class="org.pac4j.jwt.credentials.authenticator.JwtAuthenticator">
-        <constructor-arg name="encryptionSecret" value="${jwt.secret}" />
-        <constructor-arg name="signingSecret" value="${jwt.secret}" />
+        <constructor-arg name="encryptionSecret" value="${jwt.secret.signing}" />
+        <constructor-arg name="signingSecret" value="${jwt.secret.encryption}" />
       </bean>
     </constructor-arg>
   </bean>
